@@ -2,6 +2,7 @@ name = "PL/pgSQL"
 grammar = "plpgsql"
 line_comments = ["-- "]
 
-[brackets]
-"(" = ")"
-"[" = "]"
+brackets = [
+    { start = "(", end = ")", close = true, newline = false },
+    { start = "[", end = "]", close = true, newline = false },
+]
