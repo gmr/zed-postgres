@@ -48,8 +48,8 @@ jobs:
         uses: huacnlee/zed-extension-action@v2
         with:
           extension-name: postgres
-          # A fork of zed-industries/extensions owned by the publisher. Create
-          # it once; the action pushes a branch here and opens the upstream PR.
-          push-to: gmr/extensions
+          # Fork of zed-industries/extensions owned by the publisher; the action
+          # pushes a branch here and opens the upstream PR.
+          push-to: gmr/zed-extensions
         env:
           COMMITTER_TOKEN: ${{ secrets.ZED_EXTENSION_PUBLISH_TOKEN }}

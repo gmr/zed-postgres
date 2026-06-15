@@ -1,0 +1,16 @@
+name = "pglifecycle"
+grammar = "yaml"
+# Deliberately NO path_suffixes: pglifecycle files are plain .yaml/.yml and must
+# not hijack every YAML file. Zed selects this language only when a file carries
+# an editor modeline naming it (e.g. `# -*- mode: pglifecycle -*-`), which
+# overrides suffix-based detection. `modeline_aliases` is what that name resolves
+# against.
+modeline_aliases = ["pglifecycle"]
+line_comments = ["# "]
+tab_size = 2
+
+[brackets]
+"{" = "}"
+"[" = "]"
+"\"" = "\""
+"'" = "'"
