@@ -1,0 +1,6 @@
+# Zed builds grammars into this directory when installed as a dev extension
+/grammars/
+/extension.wasm
+
+# OS / editor cruft
+.DS_Store
