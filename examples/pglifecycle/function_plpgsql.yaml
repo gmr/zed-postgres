@@ -1,0 +1,13 @@
+# -*- mode: pglifecycle -*-
+---
+schema: test
+name: disable_alter_domain()
+language: plpgsql
+returns: event_trigger
+definition: |
+  BEGIN
+    IF tg_tag = 'ALTER DOMAIN' THEN
+      RAISE EXCEPTION '% is disabled', tg_tag;
+    END IF;
+  END;
+comment: Block ALTER DOMAIN statements

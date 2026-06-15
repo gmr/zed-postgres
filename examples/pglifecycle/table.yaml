@@ -1,0 +1,17 @@
+# -*- mode: pglifecycle -*-
+---
+schema: test
+name: users
+columns:
+  - name: id
+    data_type: uuid
+    nullable: false
+    default: uuid_generate_v4()
+  - name: created_at
+    data_type: timestamptz
+    default: now()
+indexes:
+  - name: users_recent
+    method: btree
+    expression: (created_at::date)
+    where: deleted_at IS NULL

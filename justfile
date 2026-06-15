@@ -49,14 +49,23 @@ check:
     ext = tomllib.loads(pathlib.Path("extension.toml").read_text())
     for key in ("id", "name", "version", "schema_version"):
         assert key in ext, f"extension.toml missing required key: {key}"
-    assert ext["grammars"], "extension.toml declares no grammars"
-    for name in ext["grammars"]:
-        d = pathlib.Path("languages") / name
-        assert (d / "config.toml").is_file(), f"missing languages/{name}/config.toml"
-        assert (d / "highlights.scm").is_file(), f"missing languages/{name}/highlights.scm"
-        cfg = tomllib.loads((d / "config.toml").read_text())
-        assert cfg.get("grammar") in ext["grammars"], \
-            f"languages/{name}/config.toml grammar not declared in extension.toml"
+    grammars = ext["grammars"]
+    assert grammars, "extension.toml declares no grammars"
+
+    # Every language directory must have highlights and reference a declared
+    # grammar (the directory name need not equal the grammar name).
+    used = set()
+    for cfg_path in pathlib.Path("languages").glob("*/config.toml"):
+        d = cfg_path.parent
+        assert (d / "highlights.scm").is_file(), f"missing {d}/highlights.scm"
+        cfg = tomllib.loads(cfg_path.read_text())
+        g = cfg.get("grammar")
+        assert g in grammars, f"{cfg_path}: grammar '{g}' not declared in extension.toml"
+        used.add(g)
+
+    # Every declared grammar must be used by at least one language.
+    unused = set(grammars) - used
+    assert not unused, f"grammars declared but unused by any language: {sorted(unused)}"
     print("manifest and language configs OK")
     PY
     just sync-queries

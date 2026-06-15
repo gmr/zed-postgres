@@ -1,0 +1,8 @@
+# -*- mode: pglifecycle -*-
+---
+schema: test
+name: test_aggregate(integer, integer)
+language: sql
+returns: INTEGER
+definition: |
+  SELECT array_agg($1);

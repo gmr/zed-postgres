@@ -3,12 +3,12 @@ name = "PostgreSQL (tree-sitter-postgres)"
 version = "0.1.0"
 schema_version = 1
 authors = ["Gavin M. Roy <gavinr@aweber.com>"]
-description = "PostgreSQL and PL/pgSQL syntax highlighting via tree-sitter-postgres"
+description = "PostgreSQL and PL/pgSQL syntax highlighting, including SQL embedded in pglifecycle YAML"
 repository = "https://github.com/gmr/zed-postgres"
 
-# Both grammars are pinned to a released tag's commit SHA for reproducibility.
-# Re-run `just sync-queries` whenever you bump `rev` so the bundled query
-# files match the grammar Zed will compile.
+# The postgres/plpgsql grammars are pinned to a released tag's commit SHA for
+# reproducibility. Re-run `just sync-queries` whenever you bump `rev` so the
+# bundled query files match the grammar Zed will compile.
 
 [grammars.postgres]
 repository = "https://github.com/gmr/tree-sitter-postgres"
@@ -19,3 +19,11 @@ path = "postgres"
 repository = "https://github.com/gmr/tree-sitter-postgres"
 rev = "d45d6c993ee0dde1a0f2f61f142a56b6bb048f53"
 path = "plpgsql"
+
+# YAML grammar, used by the `pglifecycle` language to inject postgres/plpgsql
+# highlighting into SQL-bearing fields of pglifecycle project files. Pinned to
+# the same revision Zed's built-in YAML uses, so node names match the bundled
+# queries.
+[grammars.yaml]
+repository = "https://github.com/zed-industries/tree-sitter-yaml"
+rev = "baff0b51c64ef6a1fb1f8390f3ad6015b83ec13a"

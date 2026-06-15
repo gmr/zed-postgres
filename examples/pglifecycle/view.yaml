@@ -1,0 +1,8 @@
+# -*- mode: pglifecycle -*-
+---
+schema: test
+name: active_users
+query: |
+  SELECT id, email
+    FROM test.users
+   WHERE deleted_at IS NULL
