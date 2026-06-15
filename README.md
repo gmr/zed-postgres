@@ -77,8 +77,8 @@ The `Publish` workflow automates that PR when a `v*` tag is pushed.
 
 One-time setup:
 
-1. Fork `zed-industries/extensions` to your account (e.g. `gmr/extensions`) and
-   set `push-to` in `.github/workflows/publish.yml` to that fork.
+1. The fork of `zed-industries/extensions` is `gmr/zed-extensions`, already set
+   as `push-to` in `.github/workflows/publish.yml`.
 2. Create a repository secret `ZED_EXTENSION_PUBLISH_TOKEN` — a personal access
    token with `repo` and `workflow` scopes that can push to the fork.
 
