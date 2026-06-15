@@ -1,6 +1,6 @@
 id = "postgres"
 name = "PostgreSQL (tree-sitter-postgres)"
-version = "0.1.0"
+version = "1.0.0"
 schema_version = 1
 authors = ["Gavin M. Roy <gavinr@aweber.com>"]
 description = "PostgreSQL and PL/pgSQL syntax highlighting, including SQL embedded in pglifecycle YAML"
