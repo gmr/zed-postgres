@@ -1,0 +1,55 @@
+name: Publish
+
+# Publishing a Zed extension means opening a pull request against
+# zed-industries/extensions that bumps this extension's pinned commit and
+# version. This workflow automates that PR whenever a v* tag is pushed.
+#
+# Requires a repository secret named ZED_EXTENSION_PUBLISH_TOKEN: a GitHub
+# personal access token with permission to push to a fork of
+# zed-industries/extensions and open pull requests.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  guard-version:
+    name: Tag matches extension.toml version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@v3
+
+      - name: Compare tag to manifest version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          manifest="$(python3 -c 'import tomllib,pathlib;print(tomllib.loads(pathlib.Path("extension.toml").read_text())["version"])')"
+          echo "tag=$tag manifest=$manifest"
+          if [ "$tag" != "$manifest" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match extension.toml version $manifest"
+            exit 1
+          fi
+
+      - name: Validate extension and query sync
+        run: just check
+
+  publish:
+    name: Open PR to zed-industries/extensions
+    needs: guard-version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Publish extension
+        uses: huacnlee/zed-extension-action@v2
+        with:
+          extension-name: postgres
+          # A fork of zed-industries/extensions owned by the publisher. Create
+          # it once; the action pushes a branch here and opens the upstream PR.
+          push-to: gmr/extensions
+        env:
+          COMMITTER_TOKEN: ${{ secrets.ZED_EXTENSION_PUBLISH_TOKEN }}

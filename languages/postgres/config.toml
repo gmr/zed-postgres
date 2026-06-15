@@ -1,0 +1,10 @@
+name = "PostgreSQL"
+grammar = "postgres"
+path_suffixes = ["sql", "psql", "pgsql"]
+line_comments = ["-- "]
+autoclose_before = ",;)]}"
+
+[brackets]
+"(" = ")"
+"[" = "]"
+"'" = "'"

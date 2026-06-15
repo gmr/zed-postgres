@@ -1,0 +1,21 @@
+id = "postgres"
+name = "PostgreSQL (tree-sitter-postgres)"
+version = "0.1.0"
+schema_version = 1
+authors = ["Gavin M. Roy <gavinr@aweber.com>"]
+description = "PostgreSQL and PL/pgSQL syntax highlighting via tree-sitter-postgres"
+repository = "https://github.com/gmr/zed-postgres"
+
+# Both grammars are pinned to a released tag's commit SHA for reproducibility.
+# Re-run `just sync-queries` whenever you bump `rev` so the bundled query
+# files match the grammar Zed will compile.
+
+[grammars.postgres]
+repository = "https://github.com/gmr/tree-sitter-postgres"
+rev = "d45d6c993ee0dde1a0f2f61f142a56b6bb048f53"
+path = "postgres"
+
+[grammars.plpgsql]
+repository = "https://github.com/gmr/tree-sitter-postgres"
+rev = "d45d6c993ee0dde1a0f2f61f142a56b6bb048f53"
+path = "plpgsql"
